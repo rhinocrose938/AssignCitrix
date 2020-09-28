@@ -4,33 +4,38 @@ import CanvasJSReact from '../canvasjs.react';
 //var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
+const categoryColors = ["#0B5345","#76448A", "#1ABC9C", "#1F618D"]
 
-class NewChart extends React.Component {	
-    
-  
-  render() {
-    
-      
-      const requiredData = this.props.data3;
-      const coordinate1 = requiredData.map(e => ({y: e.category1, label: moment(new Date(e.dateTime)).format('MMM/D')}));
-      const coordinate2 = requiredData.map(e => ({y: e.category2, label: moment(new Date(e.dateTime)).format('MMM/D')}));
-      const coordinate3 = requiredData.map(e => ({y: e.category3, label: moment(new Date(e.dateTime)).format('MMM/D')}));
-      const coordinate4 = requiredData.map(e => ({y: e.category4, label: moment(new Date(e.dateTime)).format('MMM/D')}));
-      
-      const arrayOfData = [{color: "#0B5345", category: "Category 1", datapoints: coordinate1},
-      {color: "#76448A", category: "Category 2", datapoints: coordinate2}, 
-      {color: "#1ABC9C", category: "Category 3", datapoints: coordinate3},
-      {color: "#1F618D", category: "Category 4", datapoints: coordinate4}
-      ]
+class NewChart extends React.Component {
 
-      const dataOption = arrayOfData.map( element => 
-        ({type: "stackedColumn", color: element.color, legendText: element.category, 
-        showInLegend:"True", dataPoints: element.datapoints}));
+  onItemClick = (e) => {
+    if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+      e.dataSeries.visible = false;
+    } else {
+      e.dataSeries.visible = true;
+    }
+    e.chart.render();
+  }
 
-        
-      
-      const  options = {
+  getChartData = () => {
+    const categoriesData = this.props.categoryData;
+    const data = this.props.chartData;
+    const categories = categoriesData.map((categoryData) => categoryData.category);
+    const categoryIntialData = categories.reduce((accumulor, category) => {
+      accumulor[category] = [];
+      return accumulor;
+    }, {});
+    const categoryDataPoints = data.reduce((categoryAccumulator, timeData) => {
+      categories.forEach((category) => categoryAccumulator[category].push({y: timeData[category],  label:moment(new Date(timeData.dateTime)).format('MMM/D')}) );
+      return categoryAccumulator;
+    }, categoryIntialData);
 
+    const dataOption = categories.map((category, index) => {
+      return ({type: "stackedColumn", color: categoryColors[index],legendText: category, showInLegend:"True", dataPoints: categoryDataPoints[category]});
+    });
+
+
+    const  options = {
       title:{
         text: "Timeline Details",
         fontColor: "#008B8B",
@@ -42,45 +47,36 @@ class NewChart extends React.Component {
       },
       legend: {
         cursor: "pointer",
-        itemclick: function (e) {
-          
-            if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-                e.dataSeries.visible = false;
-            } else {
-                e.dataSeries.visible = true;
-            }
-            e.chart.render(); 
-            
-        } 
+        itemclick: this.onItemClick
       },
-        axisX:{
+      axisX:{
         title: "Date of Occurences",
         titleFontFamily: "tahoma",
         titleFontColor: "#008B8B"
       },
-        axisY:{
+      axisY:{
         titleFontFamily: "tahoma",
         titleFontColor: "#008B8B",
         title:"No. of Occurences",
         yValueFormatString: "#,###k",
         gridColor: "LightGray"
       },
-        data: dataOption
+      data: dataOption
+    }
+    return options;
   }
-    
-    
-      
-    
-      
-          
+
+  render() {
+     const chartData = this.getChartData();
+
      return (
         <div className="container">
-          <CanvasJSChart options = {options}
+          <CanvasJSChart options = {chartData}
               onRef = {ref => this.chart = ref}
           />
         </div>
       );
-    
+
   }
 }
   export default NewChart;
