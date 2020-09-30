@@ -17,29 +17,23 @@ class Timeline extends Component {
      // array of 30 objects
 
 
-        return (
-            <div className="container m-4 ">
-               <div className="row m-5">
-                 <div className="col-sm-3"></div>
-                  <div className="col-sm-7">
-                    <div className="card">
-                       <div className="card-body">
-                       <NewChart chartData ={timebasedData} categoryData={categoryData}/>
-                      </div>
+        return ( 
+                   <div className="container-sm mt-3">
+                      <div className="row">
+                        <div className="col-sm-2"></div>
+                         <div className="col-sm-8">
+                           <NewChart chartData ={timebasedData} categoryData={categoryData}/>
+                           </div>
+                        <div className="col-sm-2"></div>
                      </div>
-                  </div>
-                  <div className="col-sm-2">
-                  </div>
-              </div>
-
-                <div className="row m-5">
-                  <div className="col-sm-1"></div>
-                    <div className="col-sm-11">
-                    <Table tableData = {categoryData}/>
-                  </div>
-                      <div className="col-sm-0"></div>
-                  </div>
-
+                     <hr/>
+                      <div className="row">
+                      <div className="col-sm-2"></div>
+                         <div className="col-sm-8">
+                       <Table tableData = {categoryData}/>
+                    </div>
+                    <div className="col-sm-2"></div>
+                </div>
             </div>
         )
     }

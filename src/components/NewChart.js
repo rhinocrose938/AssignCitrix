@@ -8,6 +8,9 @@ const categoryColors = ["#0B5345","#76448A", "#1ABC9C", "#1F618D"]
 
 class NewChart extends React.Component {
 
+
+  
+
   onItemClick = (e) => {
     if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
       e.dataSeries.visible = false;
@@ -36,6 +39,8 @@ class NewChart extends React.Component {
 
 
     const  options = {
+
+      
       title:{
         text: "Timeline Details",
         fontColor: "#008B8B",
@@ -61,6 +66,8 @@ class NewChart extends React.Component {
         yValueFormatString: "#,###k",
         gridColor: "LightGray"
       },
+      height: 260,
+      width: 720,
       data: dataOption
     }
     return options;
@@ -68,7 +75,7 @@ class NewChart extends React.Component {
 
   render() {
      const chartData = this.getChartData();
-
+      
      return (
         <div className="container">
           <CanvasJSChart options = {chartData}
