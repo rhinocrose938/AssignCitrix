@@ -14,7 +14,7 @@ class Table extends React.Component {
 
      const columns = Object.keys(requiredData[0]).map( e => ({headerName: e.toUpperCase(), field: e}));
 
-     const defaultColDef = { sortable: true, editable: true,  filter: true, resizable: true, width: 125}
+     const defaultColDef = { sortable: true, editable: true,  filter: true, resizable: true, width: 120 }
 
        /*Both rowData and columns are passed to the AgGridReact component below.
        The rendered Table has options to sort, filter and are resizable*/

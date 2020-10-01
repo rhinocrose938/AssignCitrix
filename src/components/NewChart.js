@@ -7,8 +7,6 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 const categoryColors = ["#0B5345","#76448A", "#1ABC9C", "#1F618D"]
 
 class NewChart extends React.Component {
-
-
   
 
   onItemClick = (e) => {
@@ -75,7 +73,6 @@ class NewChart extends React.Component {
 
   render() {
      const chartData = this.getChartData();
-      
      return (
         <div className="container">
           <CanvasJSChart options = {chartData}
