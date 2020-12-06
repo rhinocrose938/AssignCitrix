@@ -39,7 +39,7 @@ const data = {
 		"items": [
 			{
 				"dateTime": 1597149000000,
-				"category1": 40,
+				"category1": 30,
 				"category2": 39,
 				"category3": 1,
 				"category4": 31
